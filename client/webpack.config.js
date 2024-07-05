@@ -18,12 +18,51 @@ module.exports = () => {
       path: path.resolve(__dirname, 'dist'),
     },
     plugins: [
-      
+      new HtmlWebpackPlugin({
+        template: './src/index.html',
+        chunks: ['main']
+      }),
+      new HtmlWebpackPlugin({
+        filename: 'install.html',
+        template: './src/install.html',
+        chunks: ['install']
+      }),
+      new WebpackPwaManifest({
+        name: 'My Text Editor',
+        short_name: 'TextEditor',
+        description: 'A text editor that works offline',
+        background_color: '#ffffff',
+        crossorigin: 'use-credentials',
+        icons: [
+          {
+            src: path.resolve('src/assets/icon.png'),
+            sizes: [96, 128, 192, 256, 384, 512],
+            destination: path.join('assets', 'icons'),
+            ios: true
+          }
+        ]
+      }),
+      new InjectManifest({
+        swSrc: './src/service-worker.js',
+        swDest: 'service-worker.js'
+      })
     ],
-
     module: {
       rules: [
-        
+        {
+          test: /\.js$/,
+          exclude: /node_modules/,
+          use: {
+            loader: 'babel-loader',
+            options: {
+              presets: ['@babel/preset-env']
+            }
+          }
+        },
+        {
+          test: /\.css$/,
+          use: ['style-loader', 'css-loader']
+        }
       ],
     },
   };
