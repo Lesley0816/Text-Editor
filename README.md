@@ -5,7 +5,6 @@ The IndexedDB-Powered Note Taking App is a modern web application designed to pr
 ## Table of Contents
 
 - [Features](#features)
-- [Demo](#demo)
 - [Technologies Used](#technologies-used)
 - [License](#license)
 
